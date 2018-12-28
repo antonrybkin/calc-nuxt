@@ -17,6 +17,10 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  // For GH Pages:
+  // router: {
+  //   base: '/calc-nuxt/'
+  // },
 
   /*
   ** Customize the progress-bar color
@@ -26,8 +30,7 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [
-  ],
+  css: ['~/assets/style/calc.scss'],
 
   /*
   ** Plugins to load before mounting the App
@@ -48,6 +51,10 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+  },
+  manifest: {
+    background_color: '#1939f6',
+    theme_color: '#191b1d'
   },
 
   /*
