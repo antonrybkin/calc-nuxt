@@ -4,11 +4,13 @@
     id="app">
     <calculator />
     <div class="calc__last-results">
-      <p
-        v-for="res in lastResults.slice(0, 5)"
-        :key="res.id">
-        <b>{{ res.calculation }}</b>
-      </p>
+      <div class="calc__last-results__wrapper">
+        <p
+          v-for="res in lastResults.slice(0, 5)"
+          :key="res.id">
+          <b>{{ res.calculation }}</b>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -16,7 +18,7 @@
 <script>
 import Calculator from '../components/Calculator.vue'
 
-let config = {
+const config = {
   headers: {
     'Content-Type': 'application/json',
     'x-apikey': '5c250529b358007a7c8d7937'

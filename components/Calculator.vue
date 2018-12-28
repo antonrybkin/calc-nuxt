@@ -129,6 +129,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 String.prototype.replaceAll = function(search, replacement) {
   var target = this
   return target.split(search).join(replacement)
@@ -204,10 +206,25 @@ export default {
       if (this.tempResult != '') {
         this.calculation = this.tempResult
         //this.tempResult = ''
+        //this.postResult()
       }
     },
     backspace() {
       this.calculation = this.calculation.slice(0, -1)
+    },
+    postResult() {
+      axios
+        .post(`https://calculator-625a.restdb.io/rest/calculator`, {
+          body: this.calculation,
+          headers: {
+            'Content-Type': 'application/json',
+            'x-apikey': '5c250529b358007a7c8d7937'
+          }
+        })
+        .then(response => {})
+        .catch(e => {
+          this.errors.push(e)
+        })
     }
   }
 }
