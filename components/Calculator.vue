@@ -130,6 +130,7 @@
 
 <script>
 import axios from 'axios'
+import restdbconfig from '../restdbconfig.js'
 
 String.prototype.replaceAll = function(search, replacement) {
   var target = this
@@ -204,9 +205,9 @@ export default {
     },
     getResult() {
       if (this.tempResult != '') {
+        this.postResult()
         this.calculation = this.tempResult
         //this.tempResult = ''
-        //this.postResult()
       }
     },
     backspace() {
@@ -214,14 +215,18 @@ export default {
     },
     postResult() {
       axios
-        .post(`https://calculator-625a.restdb.io/rest/calculator`, {
-          body: this.calculation,
-          headers: {
-            'Content-Type': 'application/json',
-            'x-apikey': '5c250529b358007a7c8d7937'
-          }
+        .post(
+          `https://calculator-625a.restdb.io/rest/calculator`,
+          {
+            calculation: this.calculation + ' = ' + this.tempResult,
+            date: new Date(),
+            _mock: true
+          },
+          restdbconfig
+        )
+        .then(response => {
+          this.$parent._data.lastResults.push(response.data)
         })
-        .then(response => {})
         .catch(e => {
           this.errors.push(e)
         })

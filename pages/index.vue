@@ -5,8 +5,9 @@
     <calculator />
     <div class="calc__last-results">
       <div class="calc__last-results__wrapper">
+        <h2>Last results:</h2>
         <p
-          v-for="res in lastResults.slice(0, 5)"
+          v-for="res in lastResults.slice(lastResults.length - 6, lastResults.length).reverse()"
           :key="res.id">
           <b>{{ res.calculation }}</b>
         </p>
@@ -17,27 +18,24 @@
 
 <script>
 import Calculator from '../components/Calculator.vue'
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    'x-apikey': '5c250529b358007a7c8d7937'
-  }
-}
-
-String.prototype.replaceAll = function(search, replacement) {
-  var target = this
-  return target.split(search).join(replacement)
-}
+import restdbconfig from '../restdbconfig.js'
 
 export default {
   components: {
     Calculator
   },
+  data() {
+    return {
+      lastResults: {
+        calculation: ''
+      }
+    }
+  },
+  watchQuery: true,
   async asyncData({ $axios }) {
     const lastResults = await $axios.$get(
       `https://calculator-625a.restdb.io/rest/calculator`,
-      config
+      restdbconfig
     )
     return { lastResults }
   }
